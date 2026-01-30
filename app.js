@@ -45,14 +45,13 @@ main()
     console.log("Connection successful");
   })
 
-const store=MongoStore.create({
-    mongoUrl:dbUrl,
-    clientPromise: mongoose.connection.asPromise(),
-    crypto:{
-        secret:process.env.SECRET,
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
     },
-    touchAfter:24*3600,
-})
+    touchAfter: 24 * 3600
+});
 
 store.on("error",(err)=>{
     console.log("There is a Error in Mongo Session",err);
