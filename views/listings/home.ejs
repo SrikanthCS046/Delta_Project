@@ -1,0 +1,204 @@
+<% layout("/layout/boilerPlate") %>
+<style>
+    #filters{
+        display:flex;
+        flex-wrap:wrap;
+        margin-bottom: 2rem;
+        align-items: center;
+    }
+    .filter{
+        margin-top:1em;
+        text-align:center;
+        margin-right:1rem;
+        opacity:0.7;
+    }
+    .filter:hover{
+        opacity:1;
+        cursor: pointer;
+        transform: scale(1.08);
+    }
+    .filter a{
+        font-size:0.9rem;
+    }
+    #filters a{
+        text-decoration: none;
+        color:black;
+    }
+    .tax-info{
+        display:none;
+    }
+
+    .tax-toggle{
+        border:1px solid black;
+        border-radius:1rem;
+        height:3.5rem;
+        padding:0.8rem;
+        display:flex;
+        align-items:center;
+        margin-right:1rem;
+    }
+    
+</style>
+<body>
+    <!-- <h3>airbnb</h3> -->
+    <!-- <form method="GET" action="/listings/new">
+        <button>Add</button>
+    </form> -->
+
+
+<nav class="navbar navbar-expand-md border-bottom">
+  <div class="container-fluid">
+
+    <!-- TOGGLER -->
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- COLLAPSE -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+      <!-- FILTERS WRAPPER -->
+      <div id="filters"
+           class="d-flex flex-column flex-md-row
+                  flex-wrap w-100
+                  justify-content-md-center
+                  align-items-start align-items-md-center
+                  gap-3 py-2">
+
+        <!-- ITEM -->
+         <div class="filter">
+        <a href="/listings?category=normal"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-fire fs-5"></i>
+          <span class="ms-2 ms-md-0">Trending</span>
+        </a>
+</div>
+     <div class="filter">
+
+        <a href="/listings?category=Camping"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-tent fs-5"></i>
+          <span class="ms-2 ms-md-0">Camping</span>
+        </a>
+     </div>
+
+<div class="filter">
+            <a href="/listings?category=Arctic"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-regular fa-snowflake fs-5"></i>
+          <span class="ms-2 ms-md-0">Arctic</span>
+        </a>
+</div>
+
+
+
+        <div class="filter">
+                    <a href="/listings?category=Top of the World"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-mountain fs-5"></i>
+          <span class="ms-2 ms-md-0">Mountain</span>
+        </a>
+        </div>
+
+
+
+        <div class="filter">
+                    <a href="/listings?category=Resort"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-hotel fs-5"></i>
+          <span class="ms-2 ms-md-0">Resort</span>
+        </a>
+        </div>
+
+
+
+        <div class="filter">
+            <a href="/listings?category=Farm Stays"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-warehouse fs-5"></i>
+          <span class="ms-2 ms-md-0">Farm Stays</span>
+        </a>
+        </div>
+
+        <div class="filter">
+            <a href="/listings?category=Desert"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none text-dark">
+          <i class="fa-solid fa-sun fs-5"></i>
+          <span class="ms-2 ms-md-0">Desert</span>
+        </a>
+        </div>
+
+        <div class="filter">
+            <a href="/listings?category=Tree houses"
+           class="d-flex flex-row flex-md-column align-items-center
+                  text-decoration-none">
+          <i class="fa-solid fa-tree fs-5"></i>
+          <span class="ms-2 ms-md-0">Tree houses</span>
+        </a>
+    </div>
+
+        <!-- TAX TOGGLE -->
+        <div class="form-check-reverse form-switch ms-md-3 tax-toggle">
+          <label class="form-check-label"
+                 for="switchCheckDefault">
+            Display Total after taxes
+          </label>
+          <input class="form-check-input" type="checkbox"
+                 id="switchCheckDefault">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+    <!-- <h3>Choose your destination</h3>
+    <h3>Popular homes in India</h3> -->
+    <ul>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+   <% for(let list of lists){ %>
+    <a href="/listings/<%=list.id%>" class="listing-card">
+        <div class="card col listing-card">
+        <img src="<%=list.image.url%>" class="card-img-top" style="height:20rem" alt="List Image">
+         <div class="card-img-overlay">&hearts;</div>
+        <div class="card-body">
+            <b><%= list.title %></b><br>
+            Price :&#8377;<%=list.price.toLocaleString("en-IN")%>
+            <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
+        </div>  
+    </div>
+   </a>
+ <%   } %>
+ </div>
+
+ </ul>
+
+ <script>
+    let taxSwitch=document.getElementById("switchCheckDefault");
+    taxSwitch.addEventListener("click",()=>{
+        let taxInfo=document.getElementsByClassName("tax-info");
+        for(tax of taxInfo){
+
+            if(tax.style.display!="inline"){
+                tax.style.display="inline";
+            }
+            else{
+                tax.style.display="none";
+            }
+        }
+    })
+ </script>
+</body>
